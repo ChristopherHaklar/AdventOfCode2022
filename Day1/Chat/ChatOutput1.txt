@@ -1,41 +1,33 @@
-To solve this problem, you will need to read in the list of Elf's inventory items and their corresponding caloric values. You will then need to keep track of the total caloric value for each Elf and find the Elf with the highest total caloric value. Finally, you will need to output the total caloric value for that Elf.
-
-Here is one possible solution in Python:
+Here is a possible solution to the problem in Python:
 
 Copy code
-# Read in the list of caloric values
-caloric_values = []
-while True:
-    try:
-        caloric_value = int(input())
-        caloric_values.append(caloric_value)
-    except EOFError:
-        break
+# Read the input
+calorie_lines = [line.strip() for line in open('calories.txt')]
 
-# Keep track of the total caloric value for each Elf
-elf_caloric_totals = {}
-current_elf = ""
-for caloric_value in caloric_values:
-    if caloric_value == 0:
-        # The caloric value of 0 indicates a new Elf
-        current_elf = ""
+# Split the input into a list of lists, one for each Elf
+elves = []
+current_elf = []
+for line in calorie_lines:
+    if line == '':
+        # This is a blank line, indicating the start of a new Elf's inventory
+        elves.append(current_elf)
+        current_elf = []
     else:
-        if current_elf == "":
-            # This is the first caloric value for this Elf, so create a new entry
-            current_elf = caloric_value
-            elf_caloric_totals[current_elf] = 0
-        else:
-            # Update the total caloric value for this Elf
-            elf_caloric_totals[current_elf] += caloric_value
+        # This is the calorie count of a food item
+        current_elf.append(int(line))
 
-# Find the Elf with the highest total caloric value
-highest_caloric_total = 0
-highest_caloric_elf = ""
-for elf, caloric_total in elf_caloric_totals.items():
-    if caloric_total > highest_caloric_total:
-        highest_caloric_total = caloric_total
-        highest_caloric_elf = elf
+# Add the last Elf's inventory to the list
+elves.append(current_elf)
 
-# Output the total caloric value for the Elf with the highest caloric value
-print(highest_caloric_total)
-This solution first reads in the list of caloric values and then keeps track of the total caloric value for each Elf. It then finds the Elf with the highest total caloric value and outputs that value.
+# Find the Elf with the most calories
+most_calories = 0
+for elf in elves:
+    total_calories = sum(elf)
+    if total_calories > most_calories:
+        most_calories = total_calories
+
+# Print the result
+print(f"The Elf with the most calories is carrying {most_calories} calories.")
+This solution reads the input from a file called calories.txt, which should contain one line for each food item, with a blank line between each Elf's inventory. It then splits the input into a list of lists, one for each Elf, and calculates the total number of calories for each Elf. Finally, it finds the Elf with the most calories and prints the result.
+
+Note that this solution assumes that the input is well-formed, i.e. that it contains a valid list of calorie counts and that there is at least one Elf. It may not work correctly if the input is invalid or incomplete.
