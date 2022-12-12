@@ -2,8 +2,10 @@
 caloric_values = []
 with open("Input.txt", "r") as f:
     for line in f:
-        caloric_value = int(line.strip())
-        caloric_values.append(caloric_value)
+        line = line.strip()
+        if line:
+            caloric_value = int(line)
+            caloric_values.append(caloric_value)
 
 # Keep track of the total caloric value for each Elf
 elf_caloric_totals = {}
