@@ -1,0 +1,41 @@
+The error is likely caused by a blank line in the input file. The code is treating a blank line as an integer with the value 0, which is causing the ValueError because a blank line cannot be converted to an integer.
+
+To fix this error, you can add a check to see if the line is empty before trying to convert it to an integer. Here is an updated version of the solution that includes this fix:
+
+Copy code
+# Read in the list of caloric values from the file
+caloric_values = []
+with open("Input.txt", "r") as f:
+    for line in f:
+        line = line.strip()
+        if line:
+            caloric_value = int(line)
+            caloric_values.append(caloric_value)
+
+# Keep track of the total caloric value for each Elf
+elf_caloric_totals = {}
+current_elf = ""
+for caloric_value in caloric_values:
+    if caloric_value == 0:
+        # The caloric value of 0 indicates a new Elf
+        current_elf = ""
+    else:
+        if current_elf == "":
+            # This is the first caloric value for this Elf, so create a new entry
+            current_elf = caloric_value
+            elf_caloric_totals[current_elf] = 0
+        else:
+            # Update the total caloric value for this Elf
+            elf_caloric_totals[current_elf] += caloric_value
+
+# Find the Elf with the highest total caloric value
+highest_caloric_total = 0
+highest_caloric_elf = ""
+for elf, caloric_total in elf_caloric_totals.items():
+    if caloric_total > highest_caloric_total:
+        highest_caloric_total = caloric_total
+        highest_caloric_elf = elf
+
+# Output the total caloric value for the Elf with the highest caloric value
+print(highest_caloric_total)
+This solution skips over any empty lines in the input file by checking if the line is empty before trying to convert it to an integer. This ensures that the code does not try to convert an empty string to an integer, which would cause the ValueError.

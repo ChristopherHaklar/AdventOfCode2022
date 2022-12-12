@@ -1,0 +1,3 @@
+Your code has an error:
+caloric_value = int(line.strip())
+ValueError: invalid literal for int() with base 10: ''
