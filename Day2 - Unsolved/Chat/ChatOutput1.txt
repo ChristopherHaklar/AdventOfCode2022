@@ -1,0 +1,39 @@
+Here is a possible solution in Python:
+
+Copy code
+# Read the strategy guide from the file
+with open('Input.txt') as f:
+    guide = f.read().strip().split('\n')
+
+# Define the scoring rules
+rules = {
+    'R': {'R': 3, 'P': 0, 'S': 1},
+    'P': {'R': 1, 'P': 3, 'S': 0},
+    'S': {'R': 0, 'P': 1, 'S': 3},
+}
+
+# Define a mapping from letters to hand shapes
+mapping = {
+    'A': 'R',
+    'B': 'P',
+    'C': 'S',
+    'X': 'R',
+    'Y': 'P',
+    'Z': 'S',
+}
+
+# Define the function that calculates the score for a single round
+def score(opponent, player):
+    return rules[mapping[opponent]][mapping[player]]
+
+# Initialize the total score to 0
+total_score = 0
+
+# Loop over the strategy guide and calculate the score for each round
+for line in guide:
+    opponent, player = line.split()
+    total_score += score(opponent, player)
+
+# Print the total score
+print(total_score)
+To use this script, save it to a file named solution.py and run it using the command python solution.py. This will print the total score you would get if you were to follow the strategy guide.

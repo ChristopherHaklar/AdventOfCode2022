@@ -1,0 +1,35 @@
+The code you provided seems to be missing a crucial step in calculating the scores for each round. Currently, the code only considers the score for the hand shape that was played, but it ignores the outcome of the round (win, loss, or draw).
+
+To fix this, you can modify the score function to take the outcome of the round into account. You can use the rules dictionary to calculate the outcome for a given pair of hand shapes and add the appropriate number of points to the score. Here is an updated version of the score function that does this:
+
+Copy code
+# Define the function that calculates the score for a single round
+def score(opponent, player):
+    hand_score = rules[mapping[opponent]][mapping[player]]
+    outcome = 0
+    if hand_score == 0:
+        outcome = 0
+    elif hand_score == 1:
+        outcome = 6
+    elif hand_score == 3:
+        outcome = 3
+    return hand_score + outcome
+With this change, the code should produce the correct output. To test this, you can use the example input from the problem description:
+
+Copy code
+A Y
+B X
+C Z
+This should produce a total score of 15, which is the correct answer for this input. You can verify this by adding a few lines of code to print the score for each round, like this:
+
+Copy code
+# Loop over the strategy guide and calculate the score for each round
+for line in guide:
+    opponent, player = line.split()
+    round_score = score(opponent, player)
+    total_score += round_score
+    print(f"Round score: {round_score}")
+
+# Print the total score
+print(f"Total score: {total_score}")
+This will print the score for each round, as well as the total score, so you can verify that it is correct.

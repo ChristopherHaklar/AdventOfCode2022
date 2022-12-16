@@ -1,0 +1,53 @@
+Here is a python script that takes in the filename of the text file as a command line argument and calculates the total score:
+
+Copy code
+import sys
+
+# Function to calculate the score for a single round
+def calculate_round_score(opponent_choice, your_choice, outcome):
+  # Score for the shape chosen
+  shape_score = 0
+  if your_choice == "X":
+    shape_score = 1
+  elif your_choice == "Y":
+    shape_score = 2
+  elif your_choice == "Z":
+    shape_score = 3
+  
+  # Score for the outcome of the round
+  outcome_score = 0
+  if outcome == "win":
+    outcome_score = 6
+  elif outcome == "draw":
+    outcome_score = 3
+  
+  return shape_score + outcome_score
+
+# Function to calculate the total score
+def calculate_total_score(strategy_guide):
+  total_score = 0
+  for line in strategy_guide:
+    opponent_choice, your_choice = line.strip().split()
+    # Determine the outcome of the round
+    if opponent_choice == your_choice:
+      outcome = "draw"
+    elif (opponent_choice == "A" and your_choice == "Y") or (opponent_choice == "B" and your_choice == "Z") or (opponent_choice == "C" and your_choice == "X"):
+      outcome = "win"
+    else:
+      outcome = "loss"
+    total_score += calculate_round_score(opponent_choice, your_choice, outcome)
+  return total_score
+
+# Read the strategy guide from the file
+filename = sys.argv[1]
+with open(filename, "r") as f:
+  strategy_guide = f.readlines()
+
+# Calculate and print the total score
+total_score = calculate_total_score(strategy_guide)
+print("Total score:", total_score)
+To use the script, save it to a file (e.g. "calculate_score.py") and run it with the filename of the strategy guide as a command line argument:
+
+Copy code
+python calculate_score.py strategy_guide.txt
+The script will read the strategy guide from the file, calculate the total score, and print it to the console.
